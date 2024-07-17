@@ -18,6 +18,12 @@ def soundex_length_check (soundex_word):
         return False
 
 
+def soundex_zeros_padding(soundex_complete_code):
+    # Pad with zeros if necessary
+    soundex_zeros_padded = soundex_complete_code.ljust(4, '0')
+
+    return soundex_zeros_padded
+
 def soundex_code_conversion(character):
     # Start with the first letter (capitalized)
     soundex = character[0].upper()
@@ -29,8 +35,8 @@ def soundex_code_conversion(character):
             soundex += code
             prev_code = code
                
-    # Pad with zeros if necessary
-    soundex = soundex.ljust(4, '0')
+   # Pad with zeros if necessary
+    soundex = soundex_zeros_padding(soundex)
     return soundex
     
     
