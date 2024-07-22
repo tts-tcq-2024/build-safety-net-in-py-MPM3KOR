@@ -17,13 +17,6 @@ def soundex_length_check (soundex_word):
     soundex_zeros_padded = soundex_complete_code.ljust(4, '0')
     return soundex_zeros_padded
 
-def previous_code_cache(code_of_character):  
-     previous_code = get_soundex_code(code_of_character)
-     if code_of_character != previous_code:
-         previous_code = code_of_character
-         return previous_code
-     else:
-         return code_of_character
 
 def soundex_code_conversion(character):
     # Start with the first letter (capitalized)
@@ -31,12 +24,9 @@ def soundex_code_conversion(character):
     
     for char in character[1:]:
         code = get_soundex_code(char)
-        code_cache =previous_code_cache(code)
-        if code_cache != '0':
-            soundex += code_cache
+        if (code!='0') and (code != soundex[-1]):
+                soundex += code
                
-   # Pad with zeros if necessary
-    soundex = soundex_length_check(soundex)
     return soundex
     
     
@@ -44,5 +34,7 @@ def generate_soundex(name):
     if not name:
         return ""
     soundex_code = soundex_code_conversion(name)
+    # Pad with zeros if necessary
+    soundex_code = soundex_length_check(soundex_code)
   
     return soundex_code
