@@ -18,6 +18,7 @@ class TestSoundex(unittest.TestCase):
     def test_complete_word(self):
         self.assertEqual(generate_soundex("JOHN"), "J500")
         self.assertEqual(generate_soundex("BANGALORE"), "B524")
+        self.assertEqual(generate_soundex("CHENNAI"), "C500")
         
 
     
