@@ -8,26 +8,33 @@ def get_soundex_code(c):
         'M': '5', 'N': '5',
         'R': '6'
     }
-    return mapping.get(c, '0')  # Default to '0' for non-mapped characters
+    return mapping.get(c,'0')  # Default to '0' for non-mapped characters
 
 
+
+def soundex_length_check (soundex_word):
+    soundex_complete_code = soundex_word[0:4]
+    # Pad with zeros if necessary
+    soundex_zeros_padded = soundex_complete_code.ljust(4, '0')
+    return soundex_zeros_padded
+
+
+def soundex_code_conversion(character):
+    # Start with the first letter (capitalized)
+    soundex = character[0].upper()
+    
+    for char in character[1:]:
+        code = get_soundex_code(char)
+        if(code != soundex[-1]):
+            soundex += code
+    #Eliminating zeros in the code   
+    soundex = soundex.replace('0','')  
+    return soundex
+        
 def generate_soundex(name):
     if not name:
         return ""
-
-    # Start with the first letter (capitalized)
-    soundex = name[0].upper()
-    prev_code = get_soundex_code(soundex)
-
-    for char in name[1:]:
-        code = get_soundex_code(char)
-        if code != '0' and code != prev_code:
-            soundex += code
-            prev_code = code
-        if len(soundex) == 4:
-            break
-
+    soundex_code = soundex_code_conversion(name)
     # Pad with zeros if necessary
-    soundex = soundex.ljust(4, '0')
-
-    return soundex
+    soundex_code = soundex_length_check(soundex_code)
+    return soundex_code
